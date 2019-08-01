@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.MemberDao">
+	<select id="getMember" parameterType="map" resultMap="Member">
+		SELECT *
+		FROM member 
+		WHERE 1 = 1
+		<if test="where__id == true">
+			AND id = #{id} AND delStatus = 0
+		</if>
+		<if test="where__loginCondition == true">
+			AND loginId = #{loginId} AND loginPw = #{loginPw} AND delStatus = 0
+		</if>
+		<if test="where__loginId == true">
+			AND loginId = #{loginId} AND delStatus = 0
+		</if>
+		<if test="where_joinCondition == true">
+			AND loginId = #{loginId} OR email = #{email} AND delStatus = 0
+		</if>
+		
+		<if test="where__email == true">
+			AND email = #{email} AND delStatus = 0
+		</if>
+	</select>
+	
+	<insert id="join">
+		INSERT INTO `member`
+		SET regDate = NOW(),
+		loginId = #{loginId},
+		loginPw = #{loginPw},
+		email = #{email},
+		`name` = #{name},
+		authKey = #{authKey}
+	</insert>
+	
+	<insert id="update" parameterType="map">
+		UPDATE member
+		<set>
+			<if test="newLoginPw != null">
+				loginPw = #{newLoginPw},
+			</if>
+			<if test="emailModifyMode == 'yes' and emailModifyAuth == 'yes' and newEmail != null">
+				email = #{newEmail},
+			</if>
+			<if test="name != null">
+			name = #{name}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</insert>
+	
+	<insert id="updateAuthStatus" parameterType="map">
+		UPDATE member
+		SET emailAuthStatus = 1
+		WHERE email = #{email}
+	</insert>
+	
+	<insert id="withdraw" parameterType="map">
+		UPDATE member
+		SET delStatus = 1
+		WHERE id = #{id}
+	</insert>
+
+	<resultMap id="Member" type="com.example.demo.dto.Member">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="loginId" column="loginId" />
+		<id property="loginPw" column="loginPw" />
+		<id property="name" column="name" />
+	</resultMap>
+</mapper>

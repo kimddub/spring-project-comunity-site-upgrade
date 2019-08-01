@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+.member-form-box .member-form {
+	position:relative;
+}
+.member-form-box .member-form > div {
+	position:relative;
+}
+
+.member-form-box .member-form .find-form.visible {
+	height:210px;
+}
+
+.member-form-box .member-form .find-form {
+	margin:10px 0;
+	width:100%; 
+	text-align:center;
+	background-color:#efefef;
+	height:0;
+	transition:height 1s;
+	overflow:hidden;
+}
+
+.member-form-box .member-form .find-form .title {
+	background-color:#dfdfdf;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	margin:0;
+}
+
+.member-form-box .member-form .find-form > div:nth-child(2) {
+	margin-top:30px;
+}
+
+.member-form-box .member-form .find-form .find-status {
+	height:30px;
+}
+
+.member-form-box .member-form .find-loginId::after {
+	content:"아이디를 잊어버리셨나요?";
+	display:none;
+	white-space: nowrap;
+	background-color:ivory;
+	border:1px solid #D2691E;
+	padding:1px 6px;
+	position:absolute;
+	top:100%;
+	transform:translateX(-50%);
+	z-index:10;
+}
+
+.member-form-box .member-form .find-loginId:hover::after {
+	display:inline-block;
+}
+
+.member-form-box .member-form .find-loginPw::after {
+	content:"비밀번호를 잊어버리셨나요?";
+	display:none;
+	white-space: nowrap;
+	background-color:ivory;
+	border:1px solid #D2691E;
+	padding:1px 6px;
+	position:absolute;
+	top:100%;
+	transform:translateX(-50%);
+	z-index:10;
+}
+
+.member-form-box .member-form .find-loginPw:hover::after {
+	display:inline-block;
+}

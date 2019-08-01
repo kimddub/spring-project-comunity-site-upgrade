@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.article-edit {
+    border:2px solid lightgray;
+}
+
+.article-edit > table {
+    border:none;
+}
+
+.article-edit > table th, .article-edit > table td {
+    border:none;
+}
+
+.article-edit > table tr:not(:last-child) {
+    border-bottom:1px solid lightgray;
+}
+
+.article-edit > table tr.article-title > td {
+    height:40px;
+    font-weight:bold;
+    font-size:1.2rem;
+}
+
+.article-file .fileStatus {
+	color:red;
+	display:block;
+}
+
+.article-file .fileStatus.hasFile {
+	display:none;
+}

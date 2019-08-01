@@ -1,0 +1,141 @@
+/* 커스텀 */
+/* 반응형 레이아웃 */
+.con {
+	max-width: 1150px;
+}
+
+.con-min-width {
+	min-width: 320px;
+}
+
+html, body { 
+	overflow-x: hidden;
+}
+
+.logo {
+	padding:20px;
+	color:#ff6600;
+}
+
+button, input[type="button"], input[type="submit"] {
+	background-color: #ff6600;
+	border: none;
+	color: white;
+	padding: 7px 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 15px;
+	font-weight:bold;
+	margin: 4px 2px;
+	cursor: pointer;
+	border:2px solid white;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+	border:2px solid #ff6600;
+	background-color:white;
+	color:#ff6600;
+}
+
+.top-menu {	
+	background-color:#ff6600;
+}
+
+.top-menu > .con {
+	margin-bottom:50px;
+	padding:40px 10px;
+}
+
+.top-menu a {
+	text-decoration: none;
+	color: #FCD9B6;
+	font-weight: bold;
+	font-size: 1.2rem;
+	margin:0 10px;
+}
+
+.top-menu .article-menu-main a {
+	color:#F5FFFA;
+}
+
+.title  {
+	text-align:center;
+}
+
+.member-menu a:hover {
+	font-weight:bold;
+}
+
+.article-menu a:hover {
+	font-weight:normal;
+}
+
+.table-common > table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table-common table input[type="text"], .table-common table textarea {
+	width:95%;
+}
+
+.table-common table textarea {
+	min-height:100px;
+}
+
+.table-common > table a.article-list-title {
+	color:navy;
+}
+
+.table-common > table a.article-list-title:hover {
+	color:lightblue;
+}
+
+.table-common .btn-box {
+	text-align:center;
+}
+
+.table-common>table th, .table-common>table td {
+	border: 1px solid black;
+	padding: 10px;
+}
+
+.member-form-box {
+}
+
+.member-form-box form .member-form {
+	width:400px;
+	border: 2px solid lightgray;
+	margin:0 auto;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+.member-form-box form .member-form .member-form-btn {
+	padding:20px;
+}
+
+.member-form-box .member-form > div {
+	margin: 10px;
+	text-align:center;
+}
+
+.member-menu a {
+	font-weight:normal;
+	color:black;
+	font-size:1rem;
+}
+
+.error-box {
+	margin:0 auto;
+	margin-top:50px ;
+	border:2px solid gold;
+	width:30%;
+	padding:20px;
+	text-align:center;
+}
+
+.error-box li {
+	list-style:none;
+}

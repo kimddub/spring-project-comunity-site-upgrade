@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.ArticleDao">
+	<select id="getList" parameterType="map" resultMap="Article">
+		SELECT A.*
+		<if test="extra__repliesCount == true">
+			, COUNT(DISTINCT AR.id) AS extra__repliesCount
+		</if>
+		<if test="extra__writerName == true">
+			, M.name AS extra__writerName
+		</if>
+		FROM article AS A
+		<if test="leftJoin__articleReply == true">
+			LEFT JOIN articleReply AS AR
+			ON A.id = AR.articleId
+		</if>
+		<if test="leftJoin__member == true">
+			LEFT JOIN member AS M
+			ON A.memberId = M.id
+		</if>
+		WHERE A.boardId = #{boardId}
+		<if
+			test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
+			<if test="searchType == 'title'">AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+			<if test="searchType == 'body'">AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+			<if test="searchType == 'writer'">AND M.name LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+		</if>
+		<if test="title != null and title != ''">AND A.title = #{title}</if>
+		<if test="groupBy__articleId == true">
+			GROUP BY A.id
+		</if>
+		<choose>
+			<when test="sort == 'lowView'">
+				ORDER BY A.view ASC
+			</when>
+			<when test="sort == 'highView'">
+				ORDER BY A.view DESC
+			</when>
+			<when test="sort == 'old'">
+				ORDER BY A.id ASC
+			</when>
+			<otherwise>
+				ORDER BY A.id DESC
+			</otherwise>
+		</choose>
+		LIMIT #{prevPageArticles}, #{PerPageArticles}
+	</select>
+
+	<select id="getOne" parameterType="map" resultMap="Article">
+		SELECT A.*
+		<if test="extra__writerName == true">
+			, M.name as extra__writerName
+		</if> 
+		FROM article as A
+		<if test="leftJoin__member == true">
+			LEFT JOIN member as M
+			ON  A.memberId = M.id
+		</if>
+		WHERE A.id = #{id} AND A.boardId = #{boardId}
+	</select>
+	
+	<select id="getTotalCount" resultType="Integer">
+		SELECT COUNT(*) FROM article as A
+		<if test="searchType == 'writer'">
+			LEFT JOIN member AS M
+			ON A.memberId = M.id
+		</if>
+		WHERE A.boardId = #{boardId}
+		<if test="searchType != '' and searchKeyword  != ''">
+			<if test="searchType == 'title'"> AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+			<if test="searchType == 'body'"> AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+			<if test="searchType == 'writer'">AND M.name LIKE CONCAT('%', #{searchKeyword}, '%')</if>
+		</if>		 
+	</select>
+	
+	<!-- 해당 게시물의 파일들을 불러옴 -->
+	<select id="getArticleFiles" parameterType="map" resultType="ArticleFile">	
+		SELECT * FROM articleFile
+		WHERE articleId = #{id}
+	</select>
+	
+	<!-- 선택된 파일들을 불러옴 -->
+	<select id="getSelectedFiles" parameterType="list" resultType="ArticleFile">
+		SELECT * FROM articleFile
+		WHERE id IN <foreach collection="list" item="value" open="(" separator=" , " close=")">#{value}</foreach> 
+	</select>
+	
+	<delete id="deleteSelectedFiles" parameterType="list">
+		DELETE FROM articleFile
+		WHERE id IN <foreach collection="list" item="value" open="(" separator=" , " close=")">#{value}</foreach>
+	</delete>
+	
+	<select id="getOneFile" parameterType="Integer" resultType="ArticleFile">
+		SELECT * FROM articleFile
+		WHERE id = #{id}
+	</select>
+	
+	<delete id="deleteArticleFiles">
+		DELETE FROM articleFile
+		WHERE articleId = #{id}
+	</delete>
+
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" parameterType="map">
+		INSERT INTO article
+		SET regDate = NOW(),
+		title = #{title},
+		body = #{body},
+		boardId = #{boardId},
+		memberId = #{memberId}
+	</insert>
+	
+	<insert id="addFiles" parameterType="list">
+		INSERT INTO articleFile
+		(regDate, articleId, prefix, originFileName, `type`, `type2`) VALUES
+		(NOW(), #{articleId}, #{prefix}, #{originFileName}, #{inputType}, #{inputType2})	
+	</insert>
+
+	<insert id="update" parameterType="map">
+		UPDATE article
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="body != null">body = #{body},</if>
+			<if test="boardId != null">boardId = #{boardId},</if>
+			<if test="memberId != null">memberId = #{memberId},</if>
+		</set>
+		WHERE id = #{id}
+	</insert>
+	
+	<insert id="increaseView" parameterType="Integer">
+		UPDATE article
+		SET view = view + 1
+		WHERE id = #{id}
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM article
+		WHERE id = #{id};
+	</delete>
+	<delete id="deleteReply">
+		DELETE FROM articleReply
+		WHERE articleId = #{id};
+	</delete>
+
+	<resultMap id="Article" type="com.example.demo.dto.Article">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="title" column="title" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="boardId" column="boardId" />
+		<id property="view" column="view" />
+		<association property="extra" javaType="java.util.HashMap">
+			<result property="repliesCount" column="extra__repliesCount" />
+			<result property="writerName" column="extra__writerName" />
+		</association>
+	</resultMap>
+</mapper>

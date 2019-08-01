@@ -1,0 +1,111 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<c:set
+	value="searchType=${param.searchType }&searchKeyword=${param.searchKeyword }&boardId=${param.boardId}"
+	var="search" />
+
+<c:if test="${param.boardId == 1}">
+	<c:set var="boardName" value="자유게시판" />
+</c:if>
+<c:if test="${param.boardId == 2}">
+	<c:set var="boardName" value="Q & A" />
+</c:if>
+
+<c:if test="${boardName != null}">
+	<c:set var="pageTitle" value="${boardName}" />
+</c:if>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title><c:out value="${pageTitle}" escapeXml="true" /></title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="/resource/lib/lib.css" />
+<link rel="stylesheet" href="/resource/app/app.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/resource/app/app.js"></script>
+<script src="/resource/lib/lib.js"></script>
+<script>
+
+	function Article__delete(id) {
+
+		if ( confirm('게시물을 삭제하시겠습니까?') == false ) {
+			return false;
+		}
+
+		location.replace('./doDelete?id=' + id + '&${search}');
+		
+	}
+
+</script>
+</head>
+<body>
+
+	<header class="con">
+		<div class="logo">
+			<h1>게시판</h1>
+		</div>
+	</header>
+
+	<div class="con-min-width top-menu">
+		<div class="con row">
+	
+			<div class="top-menu-2 cell">
+				<span class="article-menu article-menu-main"> <a
+					href="../home/main">메인페이지</a> 
+					<a href="../article/list?boardId=1">자유게시판</a>
+					<a href="../article/list?boardId=2">Q & A</a>
+				</span>
+			</div>
+	
+			<div class="top-menu-1 cell-right member-menu">
+	
+				<!-- 세션이 없으면 -->
+				<c:if test="${!isLogined}">
+					<span class="member-menu"> <a href="../member/join">회원가입</a>
+						<a href="../member/login">로그인</a>
+					</span>
+			</div>
+			<div class="top-menu-2 cell-right">
+				</c:if>
+				<!-- 세션이 없으면 -->
+	
+				<!-- 세션이 있으면 -->
+				<c:if test="${isLogined}">
+					${loginMember.name} 님의  
+					<span class="member-menu"> <a href="../member/myPage">마이페이지</a>
+						<a href="../member/doLogout">로그아웃</a>
+					</span>
+			</div>
+			<div class="top-menu-2 cell">
+				<span class="article-menu article-menu-auth"> 
+				<c:if test="${param.boardId != null}">
+					<a href="../article/add?${search}">글 작성</a>
+				</c:if>
+				</span>
+				</c:if>
+				<!-- 세션이 있으면 -->
+	
+	
+				<c:if test="${article != null && article.memberId == loginMemberId}">
+	
+					<span class="article-menu article-menu-auth"> 
+						<a href="../article/modify?id=${article.id}&${search}">글 수정</a> 
+						<a href="javascript:;" onclick="Article__delete(${article.id});">글 삭제</a>
+					</span>
+	
+				</c:if>
+			</div>
+		</div>
+	</div>
+
+	<div class="con title">
+		<h1>${pageTitle}</h1>
+	</div>

@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.article-list table {
+    border:none;   
+    border-top:2px solid lightgray;
+    border-bottom:2px solid lightgray;
+    text-align:center;
+}
+
+.sort-select-box {
+	text-align:right;
+	padding:10px;
+}
+
+.article-list > table th, .article-list > table td {
+    border:none;
+}
+
+.article-list > table td {
+    border-bottom:1px solid lightgray;
+}
+
+.article-list > table thead {
+    border-bottom:2px solid lightgray;
+    background-color:#F5F5F5;
+} 
+
+.search-form {
+	display:inline-block;
+	padding:10px;
+}
+
+.pageBlock {
+	margin:30px;
+	text-align:center;
+}
+
+.pageBlock ul {
+	display:inline-block;
+	background-color:#dfdfdf;
+	border-radius:5px;
+	padding:0 15px;
+}
+
+.pageBlock ul a {
+	padding:5px 10px;
+	color:#afafaf;	
+}
+.pageBlock ul a.current-page-number {
+	font-weight:bold;
+	color:#333;
+}
+
+.pageBlock ul a:hover {
+	color:#ff6600;
+	cursor:pointer;	
+}

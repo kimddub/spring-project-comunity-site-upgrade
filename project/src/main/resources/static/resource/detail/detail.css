@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+.article-detail {
+    border:2px solid lightgray;
+}
+
+.article-detail > table {
+    border:none;
+    width:calc(100% - 100px);
+}
+
+.article-detail > table th, .article-detail > table td {
+    border:none;
+}
+
+.article-detail > table tr:not(:last-child) {
+    border-bottom:1px solid lightgray;
+}
+
+.article-detail > table tr:not(.article-body), .article-detail > table tr:not(.article-body) > td{
+    height:20px;
+    font-size:0.8rem;
+}
+
+.article-detail > table tr.article-title > td {
+    height:40px;
+    font-weight:bold;
+    font-size:1.2rem;
+}
+
+.article-detail > table td:last-child {
+    padding-right:100px;
+}
+
+.article-detail > table tr.article-body td {
+	padding:30px;
+}
+
+.article-detail > table tr.article-body .files {
+	margin:20px 0;
+}
+
+.article-detail > table tr.article-body .files .image-list {
+}
+
+.article-detail > table tr.article-body .files .img-box {
+	margin-top:20px;
+	display:inline-block;
+}
+
+.article-detail > table tr.article-body .files .download-list::before{
+	content:"";
+	margin:30px 0;
+	margin-left:-100px;
+	width:calc(100% + 100px);
+	height:10px;
+	display:block;
+	border-top:1px dotted gray;
+}
+
+.article-detail > table tr.article-body .files .download-list a {
+	color:#8A2BE2;
+}
+
+.article-detail > table tr.article-body .files .download-list a::before {
+	content:"";
+	width:17px;
+	height:17px;
+	margin-right:7px;
+	display:inline-block;
+	background-image:url('/images/download_icon.png'); 
+	background-size:contain;
+}
+
+.article-detail > table tr.article-body .files .download-list a:hover {
+	font-weight:bold;
+}
+
+.article-detail > .article-writer {
+    width:100px;
+    height:102px;
+    background-color:lightgray;
+    border-bottom:1px solid lightgray;
+    text-align:center;
+}
+
+.article-detail > .article-writer .writer-icon {
+    margin:0 auto;
+    background-color:white;
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background-image: url(http://cfile226.uf.daum.net/image/1152C7254CC45E56AF40C4);
+  	background-size: cover;
+}
+
+.reply {
+	border:2px solid lightgray;
+	padding:20px;
+	margin-bottom:30px;
+}
+
+.reply, .reply-form, .reply-list {
+	margin-top:20px;
+	box-sizing:border-box;
+}
+
+.reply-form > form div {
+	text-align:center;
+}
+
+.reply-form > form textarea, .reply-list table textarea{
+	width:80%;
+	min-height:60px;
+}
+
+.reply-form > form input[type="submit"], .reply-list table input {
+	width:40;
+	height:40px;
+	transform:translateY(-40%);
+}
+
+.reply-list .not-exist {
+	text-align:center;
+}
+
+.reply-list tr .reply-edit-mode {
+	display:none;
+}
+
+.reply-list tr.edit-mode-visible .reply-edit-mode {
+	display:block;
+}
+
+.reply-list tr.edit-mode-visible .reply-read-mode {
+	display:none;
+}
+
+.reply-list .reply-btn a {
+	color:gray;
+	font-weight:bold;
+	margin-left:10px;
+}
+
+.reply-list .reply-btn a:hover {
+	color:lightblue;
+	font-weight:normal;
+}
+
+.reply-list tr.other td.reply-btn a {
+	display:none;
+}
+
+.reply-list > table {
+    border:none;
+}
+
+.reply-list > table th {
+    display:none;
+}
+
+.reply-list > table td {
+    border:none;
+}
+
+.reply-list > table tr:nth-child(2n+1) {
+    background-color:rgba(0,0,0,0.06);
+}
+
+.reply-list > table td:first-child {
+    font-weight:bold;
+}

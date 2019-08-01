@@ -1,0 +1,57 @@
+.member-info-table table {
+	width:40%;
+	margin:30px auto;
+	border:none;
+}
+
+.member-info-table table th, .member-info-table table td {
+	border:2px solid lightgray;
+}
+
+.member-info-table table th {
+	font-weight:normal;
+	color:gray;
+}
+
+.member-info-table tr.password-form .password-modify-form {
+	display:none;
+}
+
+.member-info-table tr.password-modify-mode .password-modify-form {
+	display:block;
+}
+.member-info-table tr.password-modify-mode .password-unmodify-mode {
+	display:none;
+}
+
+.member-info-table .email-form .email-modify-form{
+	display:none;
+}
+
+.member-info-table .email-form.email-modify-mode .email-read-form {
+	display:none;
+}
+
+.member-info-table .email-form.email-modify-mode .email-modify-form{
+	display:block;;
+}
+
+.member-info-table .email-form .emailAuthStatus {
+	text-align:center;
+}
+
+#modify-form .member-info-table input[type="text"] {
+	width:50%;
+}
+
+.member-info-table .email-form .email-modify-form input[name="email"]{
+	width:80%;
+}
+
+.member-info-table .email-form .emailCode-form {
+	display:none;
+}
+
+.member-info-table .email-form .emailCode-form input[name="newEmailAuthCode"] {
+	width:30%;
+}

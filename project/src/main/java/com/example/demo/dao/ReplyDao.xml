@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.ReplyDao">
+	<select id="getList" parameterType="map" resultMap="Reply">
+		SELECT AR.*
+		<if test="extra__writerName == true">
+			, M.name AS extra__writerName
+		</if>
+		FROM articleReply as AR
+		<if test="leftJoin__member == true">
+			LEFT JOIN member AS M
+			ON AR.memberId = M.id
+		</if>
+		WHERE AR.articleId = #{articleId}
+		<if test="from != null">
+		AND AR.id >= #{from}
+		</if>
+		ORDER BY AR.id ASC
+	</select>
+	
+	<select id="getOne" parameterType="int" resultMap="Reply">
+		SELECT *
+		FROM articleReply
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="add" useGeneratedKeys="true" keyProperty="id"
+		parameterType="map">
+		INSERT INTO articleReply
+		SET regDate = NOW(),
+		body = #{body},
+		articleId = #{articleId},
+		boardId = #{boardId},
+		memberId = #{memberId}
+	</insert>
+	
+	<insert id="update" parameterType="map">
+		UPDATE articleReply
+		<set>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM articleReply
+		WHERE id = #{id};
+	</delete>
+	
+	<resultMap id="Reply" type="com.example.demo.dto.Reply">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="body" column="body" />
+		<id property="articleId" column="articleId" />
+		<id property="memberId" column="memberId" />
+		<id property="boardId" column="boardId" />
+		<association property="extra" javaType="java.util.HashMap">
+			<result property="writerName" column="extra__writerName" />
+		</association>
+	</resultMap>
+</mapper>
