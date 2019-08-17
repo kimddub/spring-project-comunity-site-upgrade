@@ -5,11 +5,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<c:set var="pageTitle" value="게시물 작성"/>
+<c:set var="pageTitle" value="${board.name} - 게시물 작성"/>
 <%@ include file="../part/head.jspf"%>
 
 <link rel="stylesheet" href="/resource/add/add.css">
 <script src="/resource/add/add.js"></script>
+
+	<div class="con title">
+		
+		<h1>${pageTitle}</h1>
+		
+	</div>
 
 <form action="./doAdd" onsubmit="formCheck(this); return false;" 
 	method="POST" enctype="multipart/form-data">

@@ -13,21 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Article {
+public class Board {
 	private long id;
 	private String regDate;
-	private String title;
-	private String body;
-	private long memberId;
-	private long boardId;
-	private long view;
-	private int extraInt;
+	private String name;
 	private Map<String, String> extra;
-
-	public String getBodyForPrint() {
-		String bodyForPrint = HtmlUtils.htmlEscape(body);
-		bodyForPrint = bodyForPrint.replace("\n", "<br>");
-
-		return bodyForPrint;
-	}
 }

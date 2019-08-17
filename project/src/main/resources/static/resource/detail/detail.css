@@ -96,13 +96,19 @@
 
 .reply {
 	border:2px solid lightgray;
-	padding:20px;
 	margin-bottom:30px;
 }
 
-.reply, .reply-form, .reply-list {
+.reply-list {
 	margin-top:20px;
-	box-sizing:border-box;
+}
+
+.reply {
+	padding-top:20px;
+}
+
+.reply h2 {
+	margin-left:80px;
 }
 
 .reply-form > form div {
@@ -169,4 +175,10 @@
 
 .reply-list > table td:first-child {
     font-weight:bold;
+}
+
+.reply-list {
+	margin-left:100px;
+	margin-right:100px;
+	width:auto;
 }

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.Article;
 import com.example.demo.dto.ArticleFile;
+import com.example.demo.dto.Board;
 
 public interface ArticleService {
 	public List<Article> getList(Map<String, Object> args);
@@ -32,6 +33,10 @@ public interface ArticleService {
 	public int getTotalCount(Map<String, Object> args);
 
 	public List<ArticleFile> getFiles(Map<String, Object> param);
+
+	public List<Article> getArticleByCondition(Map<String, Object> param);
+
+	public Board getBoard(int boardId);
 
 
 }

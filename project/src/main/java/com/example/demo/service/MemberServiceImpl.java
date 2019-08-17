@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,10 @@ public class MemberServiceImpl implements MemberService {
 		args.put("id", id);
 		args.put("where__id",true);
 		return memberDao.getMember(args);
+	}
+	
+	public List<Member> getMemberList(Map<String, Object> param) {
+		return memberDao.getMemberList(param);
 	}
 
 	public Member getMember(Map <String,Object> args) {
@@ -202,7 +207,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		if ( member != null ) {
 			resultCode = "F-1";
-			msg = "사용할 수 없는 e-mail입니다.";
+			msg = "변경할 수 없는 e-mail입니다.";
 			
 			return Maps.of("msg", msg, "resultCode", resultCode);
 		}

@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -10,6 +11,8 @@ import com.example.demo.dto.Member;
 public interface MemberDao {
 
 	public Member getMember(Map<String, Object> param);
+	
+	public List<Member> getMemberList(Map<String, Object> param);
 
 	public void join(Map<String, Object> param);
 

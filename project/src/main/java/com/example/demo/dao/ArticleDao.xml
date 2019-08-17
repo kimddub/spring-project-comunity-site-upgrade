@@ -19,7 +19,10 @@
 			LEFT JOIN member AS M
 			ON A.memberId = M.id
 		</if>
-		WHERE A.boardId = #{boardId}
+		WHERE 1 = 1
+		<if test="boardId > 0">
+			AND A.boardId = #{boardId}
+		</if>
 		<if
 			test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != ''">
 			<if test="searchType == 'title'">AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')</if>
@@ -47,6 +50,29 @@
 		LIMIT #{prevPageArticles}, #{PerPageArticles}
 	</select>
 
+	<select id="getArticleByCondition" parameterType="map" resultMap="Article">
+		SELECT @ROWNUM:=@ROWNUM+1 AS extra__num, A.*
+		FROM (
+			SELECT A.*
+			<if test="mostRepliesArticle == true">
+				, COUNT(DISTINCT AR.id) AS extra__repliesCount
+			</if>
+			FROM article AS A
+			<if test="mostRepliesArticle == true">
+				LEFT JOIN articleReply AS AR
+				ON A.id = AR.articleId
+			</if>
+			GROUP BY A.id
+			<if test="highViewArticle == true">
+				ORDER BY `view` DESC
+			</if>
+			<if test="mostRepliesArticle == true">
+				ORDER BY extra__repliesCount DESC
+			</if>
+			LIMIT 5
+		) AS A, (SELECT @ROWNUM:=0) R
+	</select>
+	
 	<select id="getOne" parameterType="map" resultMap="Article">
 		SELECT A.*
 		<if test="extra__writerName == true">
@@ -66,7 +92,10 @@
 			LEFT JOIN member AS M
 			ON A.memberId = M.id
 		</if>
-		WHERE A.boardId = #{boardId}
+		WHERE 1=1
+		<if test="boardId > 0">
+			AND A.boardId = #{boardId}
+		</if>
 		<if test="searchType != '' and searchKeyword  != ''">
 			<if test="searchType == 'title'"> AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')</if>
 			<if test="searchType == 'body'"> AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')</if>
@@ -93,6 +122,11 @@
 	
 	<select id="getOneFile" parameterType="Integer" resultType="ArticleFile">
 		SELECT * FROM articleFile
+		WHERE id = #{id}
+	</select>
+	
+	<select id="getBoard" parameterType="Integer" resultType="Board">
+		SELECT * FROM board
 		WHERE id = #{id}
 	</select>
 	
@@ -150,6 +184,7 @@
 		<id property="memberId" column="memberId" />
 		<id property="boardId" column="boardId" />
 		<id property="view" column="view" />
+		<association property="extraInt" column="extra__num"></association>
 		<association property="extra" javaType="java.util.HashMap">
 			<result property="repliesCount" column="extra__repliesCount" />
 			<result property="writerName" column="extra__writerName" />

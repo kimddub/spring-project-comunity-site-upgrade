@@ -24,6 +24,11 @@
 		</if>
 	</select>
 	
+	<select id="getMemberList" parameterType="map" resultMap="Member">
+		SELECT *
+		FROM member 
+	</select>
+	
 	<insert id="join">
 		INSERT INTO `member`
 		SET regDate = NOW(),

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.Article;
 import com.example.demo.dto.ArticleFile;
+import com.example.demo.dto.Board;
 
 @Mapper
 public interface ArticleDao {
@@ -40,6 +41,10 @@ public interface ArticleDao {
 	public void deleteSelectedFiles(List<Integer> deleteFiles);
 
 	public void increaseView(int id);
+
+	public List<Article> getArticleByCondition(Map<String,Object> param);
+
+	public Board getBoard(int id);
 
 	
 

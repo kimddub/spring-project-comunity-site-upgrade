@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.mail.Session;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.groovy.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dao.ArticleDao;
-import com.example.demo.dao.MemberDao;
 import com.example.demo.dto.Article;
 import com.example.demo.dto.ArticleFile;
-import com.example.demo.dto.Member;
+import com.example.demo.dto.Board;
 import com.example.demo.util.CUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +73,10 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		return articleDao.getList(args);
+	}
+	
+	public List<Article> getArticleByCondition(Map<String, Object> param) {
+		return articleDao.getArticleByCondition(param);
 	}
 
 	public Article getOne(Map<String, Object> args) {
@@ -213,5 +212,9 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	public void deleteReply(Map<String, Object> args) {
 		articleDao.deleteReply(args);
+	}
+	
+	public Board getBoard(int boardId) {
+		return articleDao.getBoard(boardId);
 	}
 }

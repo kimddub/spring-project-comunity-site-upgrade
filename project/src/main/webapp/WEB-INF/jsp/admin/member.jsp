@@ -5,18 +5,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<c:set var="pageTitle" value="${board.name}" />
+<c:set var="pageTitle" value="회원관리" />
 <%@ include file="../part/head.jspf"%>
-<link rel="stylesheet" href="/resource/list/list.css">
-<script src="/resource/list/list.js"></script>
 
 	<div class="con title">
 		
-		<c:if test="${board.name == null}">
-			<c:set var="pageTitle" value="통합 검색" />
-		</c:if>
-		
-		<h1>${pageTitle} 목록</h1>
+		<h1>${pageTitle}</h1>
 		
 	</div>
 
@@ -56,63 +50,32 @@
 	</div>
 </div>
 
-
+추가할 컬럼? 작성 글 수/ 댓글 수/ 탈퇴or차단or해제 버튼
 <div class="table-common article-list con">
 	<table>
-		<colgroup>
-			<col width="80">
-			<col width="180">
-			<col>
-			<col width="100">
-			<col width="100">
-		</colgroup>
 		<thead>
 			<tr>
-				<th>작성자</th>
-				<th>등록날짜</th>
-				<th>제목</th>
-				<th>댓글</th>
-				<th>조회수</th>
+				<th>id</th>
+				<th>가입날짜</th>
+				<th>이름</th>
+				<th>e-mail</th>
+				<th>로그인ID</th>
+				<th>회원등급</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="article" items="${list}">
+			<c:forEach var="member" items="${members}">
 				<tr>
-					<td><c:out value="${article.extra.writerName}" /></td>
-					<td><c:out value="${article.regDate}" /></td>
-					<td><a class="article-list-title" href="detail?id=${article.id}&${search}"><c:out
-								value="${article.title}" /></a></td>
-					<td>${article.extra.repliesCount}</td>
-					<td>${article.view}</td>
+					<td><c:out value="${member.id}" /></td>
+					<td><c:out value="${member.regDate}" /></td>
+					<td><c:out value="${member.name}" /></td>
+					<td><c:out value="${member.email}" /></td>
+					<td><c:out value="${member.loginId}" /></td>
+					<td><c:out value="${member.permissionLevel}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
-
-<nav class="pageBlock">
-	<ul>
-	
-		<c:if test="${maker.prev}"><a href="./list?cPage=${maker.startPage - 1}&${search}&${sort}"> ◀ </a></c:if>
-	
-		<c:forEach begin="${maker.startPage}" end="${maker.endPage}" var="index">
-			
-			
-			<c:if test="${cPage == index}">
-				<a class="current-page-number" href="./list?cPage=${index}&${search}&${sort}">
-			</c:if>
-			
-			<c:if test="${cPage != index}">
-				<a href="./list?cPage=${index}&${search}&${sort}">
-			</c:if>
-			
-			${index}</a>
-			
-		</c:forEach>
-		
-		<c:if test="${maker.next}"><a href="./list?cPage=${maker.endPage + 1}&${search}"> ▶ </a></c:if>
-		
-	</ul>
-</nav>
 
 <%@ include file="../part/foot.jspf"%>

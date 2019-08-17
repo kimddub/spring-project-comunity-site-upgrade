@@ -6,17 +6,10 @@
 <c:set
 	value="searchType=${param.searchType }&searchKeyword=${param.searchKeyword }&boardId=${param.boardId}"
 	var="search" />
+<c:set
+	value="sort=${param.sort }"
+	var="sort" />
 
-<c:if test="${param.boardId == 1}">
-	<c:set var="boardName" value="자유게시판" />
-</c:if>
-<c:if test="${param.boardId == 2}">
-	<c:set var="boardName" value="Q & A" />
-</c:if>
-
-<c:if test="${boardName != null}">
-	<c:set var="pageTitle" value="${boardName}" />
-</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,9 +41,20 @@
 </head>
 <body>
 
-	<header class="con">
-		<div class="logo">
-			<h1>게시판</h1>
+	<header class="con row">
+		<div class="logo cell">
+			<h1 class="main">김김이 닷컴</h1>
+			<h4>최다 후기 공유 커뮤니티</h4>
+		</div>
+		
+		<div class="all-article-search-form cell relative">
+			<form action="../article/list" method="GET">
+				<input type="hidden" name="boardId" value="0">
+				<input type="hidden" name="searchType" value="title">
+		
+				<input type="text" name="searchKeyword" placeholder="제목을 검색하세요!" value="${param.searchKeyword}"> 
+				<input type="submit" value="검색" />
+			</form>
 		</div>
 	</header>
 
@@ -58,10 +62,26 @@
 		<div class="con row">
 	
 			<div class="top-menu-2 cell">
-				<span class="article-menu article-menu-main"> <a
-					href="../home/main">메인페이지</a> 
+				<a href="../home/main">메인페이지</a> 
+				
+				<span class="admin-menu relative"> 
+					<c:if test="${isAdminMode}">
+							<span class="admin-menu-1">
+								<a href="../admin/member">관리 모드</a>
+								
+								<div class="admin-menu-2 absolute-left row">	
+									<div class="cell"><a href="../admin/member">회원 관리</a></div>
+									<div class="cell"><a href="#">게시글 관리</a></div>
+									<div class="cell"><a href="#">차단회원 관리</a></div>
+								</div>
+							</span>
+					</c:if>
+				</span>
+				
+				<span class="article-menu article-menu-main" > 
+										
 					<a href="../article/list?boardId=1">자유게시판</a>
-					<a href="../article/list?boardId=2">Q & A</a>
+					<a href="../article/list?boardId=2">공지사항</a>
 				</span>
 			</div>
 	
@@ -79,6 +99,9 @@
 	
 				<!-- 세션이 있으면 -->
 				<c:if test="${isLogined}">
+					<c:if test="${isAdminMode}">
+						<span class="admin-permission">관리자</span>
+					</c:if>
 					${loginMember.name} 님의  
 					<span class="member-menu"> <a href="../member/myPage">마이페이지</a>
 						<a href="../member/doLogout">로그아웃</a>
@@ -86,14 +109,19 @@
 			</div>
 			<div class="top-menu-2 cell">
 				<span class="article-menu article-menu-auth"> 
-				<c:if test="${param.boardId != null}">
-					<a href="../article/add?${search}">글 작성</a>
-				</c:if>
+				
+					<c:choose>
+					    <c:when test="${param.boardId == null}"></c:when>
+					    <c:when test="${!isAdminMode && param.boardId == 2}"></c:when>
+					    <c:otherwise>
+					    	<a href="../article/add?${search}">글 작성</a>
+					    </c:otherwise>
+					</c:choose>
+				
 				</span>
 				</c:if>
+				
 				<!-- 세션이 있으면 -->
-	
-	
 				<c:if test="${article != null && article.memberId == loginMemberId}">
 	
 					<span class="article-menu article-menu-auth"> 
@@ -104,8 +132,4 @@
 				</c:if>
 			</div>
 		</div>
-	</div>
-
-	<div class="con title">
-		<h1>${pageTitle}</h1>
 	</div>

@@ -1,7 +1,7 @@
 /* 커스텀 */
 /* 반응형 레이아웃 */
 .con {
-	max-width: 1150px;
+	width: 1150px;
 }
 
 .con-min-width {
@@ -14,7 +14,55 @@ html, body {
 
 .logo {
 	padding:20px;
+}
+
+.logo .main {
 	color:#ff6600;
+}
+
+span.admin-permission {
+	color: yellow;
+ 	text-decoration: none;
+ 	transition: text-shadow 1s;
+ 	animation-name: lighting;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: none;
+    animation-play-state: running;
+}
+
+@keyframes lighting {
+                from {
+                    text-shadow: none; 
+                }
+                to {
+                   text-shadow: 0 0 .2em, 0 0 .3em; 
+                }
+            }
+
+.all-article-search-form {
+	background-color:#ff6600;
+	margin-top:40px;
+	padding:3px;
+}
+
+.all-article-search-form input[type="text"] {
+	width:250px;
+	height:30px;
+	outline:0;
+	border:none;
+}
+
+.all-article-search-form input[type="submit"] {
+	height:33px;
+	width:50px;
+	position:absolute;
+	top:-2px;
+	right:0;
+	padding:5px;
+	border:none;
 }
 
 button, input[type="button"], input[type="submit"] {
@@ -59,6 +107,36 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover {
 	color:#F5FFFA;
 }
 
+.top-menu .admin-menu .admin-menu-1 a {
+	color:yellow;
+}
+
+.top-menu .admin-menu .admin-menu-1:hover .admin-menu-2 {
+	width:400px;
+	left:0;
+}
+
+.top-menu .admin-menu .admin-menu-2 {
+	position:absolute;
+	top:100%;
+	left:-1000%;
+	width:400px;
+	transition: left 0.7s;
+}
+
+.top-menu .admin-menu .admin-menu-2 a:hover {
+	font-weight:normal;
+}
+
+.top-menu .admin-menu .admin-menu-2 > div {
+}
+
+.top-menu .admin-menu .admin-menu-2  a {
+	display:block;
+	padding:5px 10px;
+	margin:0;
+}
+
 .title  {
 	text-align:center;
 }
@@ -73,6 +151,7 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover {
 
 .table-common > table {
 	width: 100%;
+	box-sizing:border-box;
 	border-collapse: collapse;
 }
 
@@ -125,6 +204,59 @@ button:hover, input[type="button"]:hover, input[type="submit"]:hover {
 	font-weight:normal;
 	color:black;
 	font-size:1rem;
+}
+
+.article-preview {
+	margin-top:50px;
+    padding:20px 50px;
+    display:inline-block;
+}
+
+.article-preview .article-preview-list {
+    width:400px;
+    position:relative;
+    border:2px dotted #FF7F50;
+    padding:20px;
+}
+
+.article-preview .article-preview-list > span {
+    position:absolute;
+    background-color:white;
+    padding:0 10px;
+    top:-10px;
+    font-weight:bold;
+    left:50%;
+    transform:translatex(-50%);
+}
+
+.article-preview .article-preview-list .article-board-name {
+	font-size:0.9rem;
+	color:#afafaf;
+}
+
+.article-preview .article-preview-list ul li:not(:last-child) {
+	margin-bottom:5px;
+}
+
+.article-preview .article-preview-list ul li a {
+	display:block;
+}
+
+.article-preview .article-preview-list ul li:hover {
+	background-color:#FAEBD7;
+	font-weight:bold;
+}
+
+.article-preview .high-view-article {
+	margin-right:50px;
+}
+
+.article-preview .article-preview-list .article-rank {
+	color:white;
+	font-weight:bold;
+	font-size:0.8rem;
+    background-color:skyblue;
+    padding:0 4px;
 }
 
 .error-box {

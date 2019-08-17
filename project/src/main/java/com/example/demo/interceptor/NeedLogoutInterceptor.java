@@ -30,8 +30,10 @@ public class NeedLogoutInterceptor implements HandlerInterceptor {
 		if (session.getAttribute("loginMemberId") != null) {
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().append("alert('로그아웃이 필요한 서비스 입니다.');")
-								.append("history.back();");
+			response.getWriter().append("<script>")
+								.append("alert('로그아웃이 필요한 서비스 입니다.');")
+								.append("history.back();")
+								.append("</script>");
 			response.getWriter().close();
 			return false;
 			

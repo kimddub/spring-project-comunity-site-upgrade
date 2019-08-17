@@ -31,6 +31,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 			request.setAttribute("isLogined", false);
 			request.setAttribute("loginMemberId", 0);
 			request.setAttribute("loginMemberLoginId", "");
+			request.setAttribute("isAdminMode", false);
 			request.setAttribute("loginMember", null);
 
 		} else {
@@ -41,8 +42,15 @@ public class BaseInterceptor implements HandlerInterceptor {
 			request.setAttribute("loginMemberId", loginMemverId);
 			request.setAttribute("loginMemberLoginId", member.getLoginId());
 			request.setAttribute("loginMember", member);
+			
+			if ( member.getPermissionLevel() ==0 ) {
+				request.setAttribute("isAdminMode", true);
+			} else {
+				request.setAttribute("isAdminMode", false);
+			}
 
 		}
+		
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

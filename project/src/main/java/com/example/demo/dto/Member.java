@@ -16,4 +16,5 @@ public class Member {
 	private String name;
 	private String authkey;
 	private boolean emailAuthStatus;
+	private int permissionLevel;
 }

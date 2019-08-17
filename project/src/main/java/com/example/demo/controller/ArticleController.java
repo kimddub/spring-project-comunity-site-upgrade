@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.groovy.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -32,13 +31,13 @@ import com.example.demo.PageInfo;
 import com.example.demo.PageMaker;
 import com.example.demo.dto.Article;
 import com.example.demo.dto.ArticleFile;
+import com.example.demo.dto.Board;
+import com.example.demo.dto.Member;
 import com.example.demo.dto.Reply;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.ReplyService;
 
-import ch.qos.logback.classic.Logger;
-import jline.internal.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -60,11 +59,12 @@ public class ArticleController {
 			@RequestParam Map<String, Object> param,
 			PageInfo pInfo, Model model	) {
 		
-		if(boardId <= 0) {
-			model.addAttribute("historyBack",true);
-			
-			return "common/redirect";
+		if(boardId != 1 && boardId != 2) {
+			boardId = 0;
 		}
+		
+		Board board = articleService.getBoard(boardId);
+		model.addAttribute("board", board);
 		
 		param.put("boardId", boardId);
 		
@@ -73,7 +73,6 @@ public class ArticleController {
 		
 		param.put("prevPageArticles", pInfo.getPrevPageArticles());
 		param.put("PerPageArticles", pInfo.getPerPageArticles());
-		
 		
 		List<Article> list = articleService.getList(param);
 
@@ -88,6 +87,7 @@ public class ArticleController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("maker", maker);
+		model.addAttribute("cPage", pInfo.getCPage());
 		
 		return "article/list";
 	}
@@ -178,7 +178,20 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/article/add")
-	public String showAdd(HttpSession session, Model model) {
+	public String showAdd(@RequestParam Map<String, Object> param, HttpServletRequest request, Model model) {
+		int boardId = Integer.parseInt((String)param.get("boardId"));
+		
+		if( boardId == 2 && (int)request.getAttribute("loginMemberPermissionLevel") != 0 ) {
+			model.addAttribute("resultCode", "F-1");
+			model.addAttribute("alertMsg", "관리자만 작성할 수 있는 게시판입니다.");
+			model.addAttribute("historyBack", true);
+			
+			return "common/redirect";
+		}
+			
+		Board board = articleService.getBoard(boardId);
+		model.addAttribute("board", board);
+		
 		return "/article/add";
 	}
 
