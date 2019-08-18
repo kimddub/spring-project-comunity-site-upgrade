@@ -35,5 +35,7 @@ public interface MemberService {
 	public Map<String, Object> findLoginPw(Map<String, Object> param, Member member);
 
 	public Map<String, Object> sendNewEmailAuthCode(String newEmail);
+
+	public Map<String, Object> updatePermission(Map<String, Object> param);
 	
 }

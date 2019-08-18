@@ -8,6 +8,24 @@
 <c:set var="pageTitle" value="회원관리" />
 <%@ include file="../part/head.jspf"%>
 
+<script>
+	function selectAll(checkFlag) { 
+	
+	       var f = document.memberUpdateForm; 
+	
+	       for(var i=0; i<f.elements.length; i++) { 
+	
+	               if(f.elements[i].name == 'memberIdForUpdate'){ 
+	
+	                       f.elements[i].checked = checkFlag; 
+	
+	               } 
+	
+	       } 
+	
+	} 
+</script>
+
 	<div class="con title">
 		
 		<h1>${pageTitle}</h1>
@@ -51,31 +69,53 @@
 </div>
 
 추가할 컬럼? 작성 글 수/ 댓글 수/ 탈퇴or차단or해제 버튼
-<div class="table-common article-list con">
-	<table>
-		<thead>
-			<tr>
-				<th>id</th>
-				<th>가입날짜</th>
-				<th>이름</th>
-				<th>e-mail</th>
-				<th>로그인ID</th>
-				<th>회원등급</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="member" items="${members}">
+<form name="memberUpdateForm" action="./doUpdateMemberPermission">
+	<div class="table-common article-list con">
+		<table>
+			<thead>
 				<tr>
-					<td><c:out value="${member.id}" /></td>
-					<td><c:out value="${member.regDate}" /></td>
-					<td><c:out value="${member.name}" /></td>
-					<td><c:out value="${member.email}" /></td>
-					<td><c:out value="${member.loginId}" /></td>
-					<td><c:out value="${member.permissionLevel}" /></td>
+					<th colspan="6">
+						선택된 회원 
+						<select name="updatedPermissionLevel">
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select> 
+						(으)로 <input type="submit" value="변경"> 
+					</th>
+					
+					<th>부가기능</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-</div>
+				<tr>
+					<th>
+						<input type="checkbox" onclick='selectAll(this.checked);'>
+					</th>
+					<th>id</th>
+					<th>이름</th>
+					<th>회원등급</th>
+					<th>e-mail</th>
+					<th>로그인ID</th>
+					<th>가입날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="member" items="${members}">
+					<tr>
+						<td>
+							<input type="checkbox" name="memberIdForUpdate" value="${member.id}">
+						</td>
+						<td><c:out value="${member.id}" /></td>
+						<td><c:out value="${member.name}" /></td>
+						<td><c:out value="${member.permissionLevel}" /></td>
+						<td><c:out value="${member.regDate}" /></td>
+						<td><c:out value="${member.email}" /></td>
+						<td><c:out value="${member.loginId}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</form>
 
 <%@ include file="../part/foot.jspf"%>

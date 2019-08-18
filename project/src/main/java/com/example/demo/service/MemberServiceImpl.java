@@ -322,4 +322,25 @@ public class MemberServiceImpl implements MemberService {
 		
 		return Maps.of("resultCode", resultCode, "msg", msg);
 	}
+	
+	public Map<String, Object> updatePermission(Map<String, Object> param) {
+		String resultCode = "";
+		String msg ="";
+		
+		/*
+		String[] memberIdForUpdate = (String[])param.get("memberIdForUpdate");
+		
+		for (String id : memberIdForUpdate) {
+			System.out.println(id);
+		}
+		System.out.println(param.get("memberIdForUpdate"));
+		*/
+		
+		memberDao.updatePermission(param);
+		
+		resultCode = "S-1";
+		msg = ((String[])param.get("memberIdForUpdate")).length + "명의 회원 권한을 " + param.get("updatedPermissionLevel") + "로 변경하였습니다.";
+		
+		return Maps.of("resultCode",resultCode,"msg",msg);
+	}
 }

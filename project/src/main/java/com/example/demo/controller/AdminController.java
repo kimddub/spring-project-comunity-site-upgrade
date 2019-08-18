@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,4 +40,32 @@ public class AdminController {
 		return "admin/member";
 	}
 	
+	@RequestMapping("admin/doUpdateMemberPermission")
+	public String doUpdateMemberPermission(String updatedPermissionLevel,String[] memberIdForUpdate, HttpServletRequest request,Model model) {
+		if (!(boolean)request.getAttribute("isAdminMode")) {
+			
+			model.addAttribute("alertMsg", "관리자 권한이 없습니다");
+			model.addAttribute("historyBack", true);
+			
+			return "common/redirect";
+		}
+		
+		/*
+		for (String id : memberIdForUpdate) {
+			System.out.println(id);
+		}
+		*/
+		
+		Map<String,Object> param = new HashMap<>();
+		param.put("updatedPermissionLevel", updatedPermissionLevel);
+		param.put("memberIdForUpdate", memberIdForUpdate);
+		
+		Map<String,Object> updatePermissionRs = memberService.updatePermission(param);
+		
+		model.addAttribute("alertMsg", updatePermissionRs.get("msg"));
+		model.addAttribute("resultCode", updatePermissionRs.get("resultCode"));
+		model.addAttribute("redirectUrl", "./member");
+		
+		return "common/redirect";
+	}
 }

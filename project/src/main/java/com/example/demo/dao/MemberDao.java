@@ -21,5 +21,7 @@ public interface MemberDao {
 	public void withdraw(Map<String, Object> args);
 
 	public void updateAuthStatus(Map<String, Object> param);
+
+	public void updatePermission(Map<String, Object> param);
 	
 }

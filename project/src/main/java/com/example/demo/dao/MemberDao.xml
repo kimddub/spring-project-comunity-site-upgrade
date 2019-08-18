@@ -55,6 +55,15 @@
 		WHERE id = #{id}
 	</insert>
 	
+	<insert id="updatePermission" parameterType="map">
+		UPDATE member
+		SET permissionLevel = #{updatedPermissionLevel}
+		WHERE id IN
+		<foreach collection="memberIdForUpdate" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>
+	</insert>
+	
 	<insert id="updateAuthStatus" parameterType="map">
 		UPDATE member
 		SET emailAuthStatus = 1
